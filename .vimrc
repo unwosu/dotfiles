@@ -50,6 +50,7 @@ syntax on
 
 set smartindent
 set autoindent
+set guifont=Inconsolata\ 12
 " set cindent
 " imap <C-Return> <CR><CR><C-o>k<Tab>
 " imap <C-Return> <CR><CR><C-o>k<Tab>
@@ -77,3 +78,12 @@ set splitright
 " Auto pairs Options
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
+
+" Change the way the cursor is in insert mode
+" autocmd InsertEnter,InsertLeave * set cul!
+
+
+
+" Closing brackets
+let g:AutoPairs = {}
+let g:autoclose_on = 0
