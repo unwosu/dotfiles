@@ -6,25 +6,43 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" AutoCompletion
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'dracula/vim'
 Plugin 'ervandew/supertab'
+
+" Director Navigation
 Plugin 'kien/ctrlp.vim'
-Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/nerdtree'
-Plugin 'easymotion/vim-easymotion'
+
+" Productivity
 Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-smooth-scroll'
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
 Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-commentary'
-Plugin 'dhruvasagar/vim-table-mode'
+
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+Plugin 'Yggdroot/indentLine'
 Plugin 'jiangmiao/auto-pairs'
+
+" Typescript 
+Plugin 'leafgarland/typescript-vim'
+
+" Go plugins
+Plugin 'fatih/vim-go'
+
+" Rust plugins
+Plugin 'rust-lang/rust.vim'
+Plugin 'racer-rust/vim-racer'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+
+" set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+" autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
 
 let mapleader = " "
 
@@ -46,23 +64,27 @@ set hlsearch
 set number
 set tabstop=2
 set shiftwidth=2
+set number
 syntax on
 
 set smartindent
 set autoindent
-set guifont=Inconsolata\ 12
-" set cindent
-" imap <C-Return> <CR><CR><C-o>k<Tab>
-" imap <C-Return> <CR><CR><C-o>k<Tab>
+set background=dark        " for the light version
+colorscheme molokai 
+let g:one_allow_italics = 1 " I love italic for comments
 
-colorscheme dracula
-
+" All custom keys for vim
 nnoremap <leader>fs :w<enter>
 nnoremap <leader>qq :wq<enter>
 nnoremap <leader>bb :CtrlP<enter>
-nnoremap <leader>ff :NERDTreeToggle<CR>
+" nnoremap <leader>ff :NERDTreeToggle<CR>
+nnoremap <leader>ft :NERDTreeToggle<CR>
+nnoremap <leader>ff :CtrlP<CR>
 nnoremap <leader>r :!%:p
 nnoremap <leader>ww <C-W><C-W>
+nnoremap <leader>fmt gg=G<enter>
+
+set guifont="Ubuntu Mono":13
 
 
 " Managing some splits
@@ -71,6 +93,14 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Indent guides
+" let g:indentLine_color_term = 239
+let g:indentLine_char = '|'
+let g:indentLine_conceallevel=1
+" let g:indentLine_leadingSpaceEnabled=1
+" let g:indentLine_bgcolor_term = 202
+" let g:indentLine_bgcolor_gui = '#FF5F00'
+
 
 set splitbelow 
 set splitright 
@@ -78,12 +108,24 @@ set splitright
 " Auto pairs Options
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
+" let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'", '':''}
+let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'"}
 
 " Change the way the cursor is in insert mode
 " autocmd InsertEnter,InsertLeave * set cul!
 
+let g:airline_theme='badwolf'
 
 
 " Closing brackets
 let g:AutoPairs = {}
 let g:autoclose_on = 0
+
+set visualbell t_vb=
+
+
+"Rust formatting
+let g:rustfmt_autosave = 1
+
+" Type script formatting
+let g:typescript_indent_disable = 1
