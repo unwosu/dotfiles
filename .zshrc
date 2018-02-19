@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/udokanwosu/.oh-my-zsh
+export ZSH=/Users/udoka.nwosu/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -10,7 +10,7 @@ export ZSH=/Users/udokanwosu/.oh-my-zsh
 autoload -U colors && colors
 # PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
 # ZSH_THEME="powerlevel9k/powerlevel9k"
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -71,7 +71,7 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
@@ -87,9 +87,6 @@ source $ZSH/oh-my-zsh.sh
 #
 #
 #
-# PATHS
-export DROPBOX="$HOME/Dropbox"
-export SCRIPTS="$HOME/Document/Scripts"
 
 # export PYENV_ROOT="$HOME/.pyenv"
 # export PATH="$PYENV_ROOT/bin:$PATH"
@@ -99,7 +96,6 @@ export SCRIPTS="$HOME/Document/Scripts"
 # Yarn package
 export PATH="$PATH:$(yarn global bin)"
 
-export PATH="$PATH:/Users/udokanwosu/protobuf"
 
 # Ruby env
 # eval "$(rbenv init -)"
@@ -112,11 +108,9 @@ alias python=python3
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias vim="mvim -v"
+alias vim="nvim"
 alias doc="cd $HOME/Documents"
-alias tut="cd $HOME/Documents/Tutorials"
 alias down="cd $HOME/Downloads/"
-alias musicd="open ~/Desktop/Files/Java\ Files/DeezerDownloader.jar"
 
 # Short hand commands
 alias firstline="head -n 1"
@@ -126,6 +120,7 @@ alias linecount="wc -l"
 
 # Config shortcuts
 alias vimrc="vim $HOME/.vimrc";
+alias nvimrc="vim $HOME/.config/nvim/init.vim";
 alias bashrc="vim $HOME/.bashrc && source $HOME/.bashrc";
 alias zshrc="vim $HOME/.zshrc && source $HOME/.zshrc";
 alias bp="bashrc"
@@ -135,7 +130,6 @@ alias proj="cd $DROPBOX/Projects"
 alias school="ssh un4@un4.host.cs.st-andrews.ac.uk"
 alias sublime="open -a Sublime\ Text"
 alias code="open -a /Applications/Visual\ Studio\ Code.app/"
-alias renamefiles="python /Users/udokanwosu/Documents/Scripts/PythonSnippets/renamefiles.py"
 
 
 # Unzipping *everything*
@@ -165,15 +159,6 @@ findfile() {
 	find ./ -iname arg1
 }
 
-# Spark Shit
-export SPARK_HOME=~/spark
-export PATH=$PATH:$SPARK_HOME/bin
-export PYSPARK_PYTHON=python3
-export PATH=$SPARK_HOME/bin:$SPARK_HOME/sbin:$SPARK_HOME/conf:$PATH
-export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip:$PYTHONPATH
-
-alias sparkup="$SPARK_HOME/bin/spark-submit"
-
 # source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 
@@ -182,15 +167,10 @@ alias sparkup="$SPARK_HOME/bin/spark-submit"
 
 
 
-
-# Link to rust binaries
-
-export PATH=$PATH:/Users/udokanwosu/.cargo/bin
-
-# Docker Commands
-alias dkrm="docker rm -v $(docker ps -aq -f status=exited)"
-alias dkstop="docker stop $(docker ps -q)"
-alias dkrmall="docker rm $(docker ps -aq)"
+# # Docker Commands
+# alias dkrm="docker rm -v $(docker ps -aq -f status=exited)"
+# alias dkstop="docker stop $(docker ps -q)"
+# alias dkrmall="docker rm $(docker ps -aq)"
 
 
 # Go paths
@@ -203,7 +183,7 @@ export PATH=$PATH:$GOROOT/bin
 # Visual Studio Code
 export PATH=$PATH:~/scripts/
 
-source "/Users/udokanwosu/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+source "/Users/udoka.nwosu/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
 #Nmap setting
 alias nmp="/usr/local/Cellar/nmap/7.60/bin/nmap"
