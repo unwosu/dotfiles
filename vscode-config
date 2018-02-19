@@ -1,0 +1,69 @@
+{
+    "editor.fontFamily": "CodeNewRoman,mononokiNerdFontCM-Regular, UbuntuMonoNerdFontC-Regular, Hermit-medium,  Ubuntu Mono, Inconsolata, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 12,
+    "editor.lineNumbers": "relative",
+    "editor.ruler": [
+        79
+    ],
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#ff4081",
+        "statusBar.background": "#005f87",
+        "statusBar.noFolderBackground": "#005f87",
+        "statusBar.debuggingBackground": "#005f87"
+    },
+    "window.zoomLevel": 0,
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    "workbench.colorTheme": "Kary － Eye Light",
+    "rust.mode": "legacy",
+    "editor.autoClosingBrackets": false,
+    "rust.rustup": {
+        "toolchain": "nightly-x86_64-apple-darwin"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.ruler": [
+            79
+        ]
+    },
+    "java.errors.incompleteClasspath.severity": "ignore",
+    "vim.leader": "<space>",
+    "vim.enableNeovim": true,
+    "vim.neovimPath": "nvim",
+    "vim.statusBarColorControl": true,
+    "vim.statusBarColors": {
+        "normal": "#005f5f",
+        "insert": "#5f0000",
+        "visual": "#5f00af",
+        "visualline": "#005f87",
+        "visualblock": "#86592d",
+        "replace": "#000000"
+    },
+    "vim.otherModesKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<space>", "f", "f"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.quickOpen",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": [
+                "<space>", "f", "s"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.files.save",
+                    "args": []
+                }
+            ]
+        }
+    ]
+}
