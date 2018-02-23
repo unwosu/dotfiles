@@ -42,11 +42,18 @@ Plug 'leafgarland/typescript-vim'
 
 " Go plugins
 Plug 'fatih/vim-go'
+Plug '/usr/local/opt/fzf'
 " Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
 " Rust plugins
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
+
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ayu-theme/ayu-vim'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()            " required
 
@@ -78,20 +85,27 @@ set ignorecase
 set smartcase
 set hlsearch
 set relativenumber
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set number
 syntax on
 
 set smartindent
 set autoindent
 set background=dark        " for the light version
-colorscheme PaperColor
+" colorscheme palenight
 let g:one_allow_italics = 1 " I love italic for comments
+
+set termguicolors     " enable true colors support
+let ayucolor="light"  " for light version of theme
+let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 
 " All custom keys for vim
 nnoremap <leader>fs :w<enter>
 nnoremap <leader>qq :wq<enter>
+nnoremap <leader>ss :Find<enter>
 nnoremap <leader>bb :CtrlP<enter>
 " nnoremap <leader>ff :NERDTreeToggle<CR>
 nnoremap <leader>ft :NERDTreeToggle<CR>
@@ -153,3 +167,19 @@ let g:pymode_python = 'python3'
 
 " Jedi vim options
 let g:jedi#show_call_signatures = "1"
+
+
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+
+set grepprg=rg\ --vimgrep
+
