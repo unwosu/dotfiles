@@ -43,10 +43,19 @@ Plug 'leafgarland/typescript-vim'
 " Go plugins
 Plug 'fatih/vim-go'
 " Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+"
 
 " Rust plugins
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
+
+" Themes
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ayu-theme/ayu-vim'
+
+" Fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()            " required
 
@@ -86,19 +95,24 @@ syntax on
 set smartindent
 set autoindent
 set background=dark        " for the light version
-colorscheme PaperColor
+" colorscheme PaperColor
+" colorscheme gruvbox 
+" colorscheme palenight
 let g:one_allow_italics = 1 " I love italic for comments
 
 " All custom keys for vim
 nnoremap <leader>fs :w<enter>
 nnoremap <leader>qq :wq<enter>
 nnoremap <leader>bb :CtrlP<enter>
-" nnoremap <leader>ff :NERDTreeToggle<CR>
+nnoremap <leader>ss :Find<enter>
 nnoremap <leader>ft :NERDTreeToggle<CR>
-nnoremap <leader>ff :CtrlP<CR>
+" nnoremap <leader>ff :CtrlP<CR>
+nnoremap <leader>ff :FZF<CR>
 nnoremap <leader>r :!%:p
 nnoremap <leader>ww <C-W><C-W>
 nnoremap <leader>fmt gg=G<enter>
+noremap <leader>/ :Commentary<cr>
+
 
 
 " Managing some splits 
@@ -111,9 +125,22 @@ nnoremap <C-H> <C-W><C-H>
 let g:indentLine_color_term = 239
 let g:indentLine_char = '.'
 let g:indentLine_conceallevel=1
+"
 " let g:indentLine_leadingSpaceEnabled=1
 " let g:indentLine_bgcolor_term = 202
 " let g:indentLine_bgcolor_gui = '#FF5F00'
+
+" let g:indentLine_char = ''
+" let g:indentLine_first_char = ''
+" let g:indentLine_showFirstIndentLevel = 1
+" let g:indentLine_setColors = 0
+
+"Ayu theme.
+set termguicolors     " enable true colors support
+let ayucolor="light"  " for light version of theme
+let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 
 
 set splitbelow 
@@ -126,8 +153,7 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 " Change the way the cursor is in insert mode
 " autocmd InsertEnter,InsertLeave * set cul!
 
-let g:airline_theme='badwolf'
-
+let g:airline_theme='ayu'
 
 " Closing brackets
 let g:AutoPairs = {}
@@ -153,3 +179,41 @@ let g:pymode_python = 'python3'
 
 " Jedi vim options
 let g:jedi#show_call_signatures = "1"
+
+" FZF with ripgrep FTW!!!
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+set grepprg=rg\ --vimgrep
+
+
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+" Auto Commands
+autocmd BufNewFile,BufRead *.js,*.py :normal gg=G
+
+augroup go
+	autocmd FileType go nmap <silent> :build :!go build main.go
+	autocmd FileType go nmap <silent> :run :!go run main.go
+	autocmd FileType go nmap <silent> :ta :!go test ./...
+" autocmd FileType go nnoremap <buffer> <leader>bb :
+
+
+" Copy command without pbcopy
+set clipboard^=unnamed
