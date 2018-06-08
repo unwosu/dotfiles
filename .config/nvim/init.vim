@@ -18,6 +18,11 @@ Plug 'zchee/deoplete-go', {'build': {'unix': 'make'}}
 Plug 'ervandew/supertab'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
+Plug 'sebdah/vim-delve'
+Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'therubymug/vim-pyte'
 
 " Director Navigation
 Plug 'kien/ctrlp.vim'
@@ -30,27 +35,24 @@ Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-commentary'
 Plug 'mattn/emmet-vim'
+Plug 'Yggdroot/indentLine'
+Plug 'jiangmiao/auto-pairs'
 
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'Yggdroot/indentLine'
-Plug 'jiangmiao/auto-pairs'
 
 " Typescript 
 Plug 'leafgarland/typescript-vim'
 
 " Go plugins
-Plug 'fatih/vim-go'
 Plug '/usr/local/opt/fzf'
 " Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'fatih/vim-go'
 
 " Rust plugins
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
-
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'ayu-theme/ayu-vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -60,7 +62,7 @@ call plug#end()            " required
 filetype plugin indent on    " required
 
 
-" set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 " autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
 let g:go_fmt_command = "goimports"
 
@@ -87,32 +89,35 @@ set hlsearch
 set relativenumber
 set tabstop=4
 set shiftwidth=4
+set expandtab
 set number
+set endofline
 syntax on
 
 set smartindent
 set autoindent
 set background=dark        " for the light version
-" colorscheme palenight
 let g:one_allow_italics = 1 " I love italic for comments
 
+let base16colorspace=256  " Access colors present in 256 colorspace
 set termguicolors     " enable true colors support
-let ayucolor="light"  " for light version of theme
-let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+
+colorscheme jellygrass
 
 " All custom keys for vim
 nnoremap <leader>fs :w<enter>
 nnoremap <leader>qq :wq<enter>
 nnoremap <leader>ss :Find<enter>
 nnoremap <leader>bb :CtrlP<enter>
-" nnoremap <leader>ff :NERDTreeToggle<CR>
+" nnoremap <leader>cc :Commentary<enter>
 nnoremap <leader>ft :NERDTreeToggle<CR>
-nnoremap <leader>ff :CtrlP<CR>
+nnoremap <leader>ff :FZF<CR>
+nnoremap <leader>pf :FZF<CR>
 nnoremap <leader>r :!%:p
 nnoremap <leader>ww <C-W><C-W>
 nnoremap <leader>fmt gg=G<enter>
+noremap <leader>// :Commentary<cr>
+noremap <leader>tb :Tabularize /=<cr>
 
 
 " Managing some splits 
@@ -140,18 +145,19 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 " Change the way the cursor is in insert mode
 " autocmd InsertEnter,InsertLeave * set cul!
 
-let g:airline_theme='badwolf'
-
+let g:airline_theme='ayu'
+let g:airline_theme="default"
+let g:airline_theme = "light"
 
 " Closing brackets
-let g:AutoPairs = {}
+let g:AutoPairs    = {}
 let g:autoclose_on = 0
 
 set visualbell t_vb=
 
 
 "Rust formatting
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave          = 1
 
 " Type script formatting
 let g:typescript_indent_disable = 0
@@ -163,7 +169,7 @@ let g:typescript_indent_disable = 0
 let g:user_emmet_install_global = 0
 autocmd Filetype html,css EmmetInstall
 
-let g:pymode_python = 'python3'
+let g:pymode_python             = 'python3'
 
 " Jedi vim options
 let g:jedi#show_call_signatures = "1"
@@ -179,7 +185,27 @@ let g:jedi#show_call_signatures = "1"
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+" command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 set grepprg=rg\ --vimgrep
 
+
+augroup javascript
+    autocmd!
+    autocmd FileType javascript nmap <silent> :run :!node %<cr>
+    autocmd FileType javascript nmap <silent> :install :!yarn install<cr>
+augroup END
+
+"" Go settings
+augroup go
+    autocmd!
+    autocmd FileType go nmap <silent> :run :!go run %<cr>
+    autocmd FileType go nmap <silent> :build :!go build<cr>
+    autocmd FileType go nmap <silent> :ta :!go test ./...<cr>
+    autocmd FileType go nmap <silent> :bm :!go test -bench=. ./...<cr>
+	autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+augroup END
+
+" Copy commnd
+set clipboard+=unnamedplus

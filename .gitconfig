@@ -1,0 +1,14 @@
+[user]
+	name = Udoka Nwosu
+	email = nwosuudoka@gmail.com
+[core]
+	editor = nvim
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[alias]
+    tree = log --all --decorate --oneline --graph
+    st = status
+    cm = commit
+    d = diff
+    ol = log --oneline
+

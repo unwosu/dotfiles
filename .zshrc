@@ -1,116 +1,41 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/udoka.nwosu/.oh-my-zsh
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-autoload -U colors && colors
-# PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
-# ZSH_THEME="powerlevel9k/powerlevel9k"
-# ZSH_THEME="spaceship"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
 #
-
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
+# Executes commands at the start of an interactive session.
 #
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-#
+# Customize to your needs...
+# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
-# export PYTHON_CONFIGURE_OPTS="--enable-framework"
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+
+# cd "$HOME/Documents/yoti/yoti-backend/" && source "initialise.sh"
+
+# Customize to your needs...
+# PATHS
 
 # Yarn package
 export PATH="$PATH:$(yarn global bin)"
 
+export PATH="$PATH:/Users/udokanwosu/protobuf"
 
 # Ruby env
 # eval "$(rbenv init -)"
 
 #Python Commands
 alias python=python3
+alias emacs="emacs -nw"
 
-
-# Example aliases
-alias zshconfig="mate ~/.zshrc"
-alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias vim="nvim"
 alias doc="cd $HOME/Documents"
+alias tut="cd $HOME/Documents/tut"
 alias down="cd $HOME/Downloads/"
+alias musicd="open ~/Desktop/Files/Java\ Files/DeezerDownloader.jar"
 
 # Short hand commands
 alias firstline="head -n 1"
@@ -123,6 +48,9 @@ alias vimrc="vim $HOME/.vimrc";
 alias nvimrc="vim $HOME/.config/nvim/init.vim";
 alias bashrc="vim $HOME/.bashrc && source $HOME/.bashrc";
 alias zshrc="vim $HOME/.zshrc && source $HOME/.zshrc";
+alias tmuxrc="vim $HOME/.tmux.conf && tmux source-file $HOME/.tmux.conf"
+alias spacerc="vim $HOME/.spacemacs"
+alias gitrc="vim $HOME/.gitconfig"
 alias bp="bashrc"
 alias vrc="vimrc"
 alias mike="cd /Volumes/MichaelHD"
@@ -130,6 +58,7 @@ alias proj="cd $DROPBOX/Projects"
 alias school="ssh un4@un4.host.cs.st-andrews.ac.uk"
 alias sublime="open -a Sublime\ Text"
 alias code="open -a /Applications/Visual\ Studio\ Code.app/"
+alias renamefiles="python /Users/udokanwosu/Documents/Scripts/PythonSnippets/renamefiles.py"
 
 
 # Unzipping *everything*
@@ -154,28 +83,51 @@ extract () {
      fi
 }
 
-findfile() {
-	arg1=$1
-	find ./ -iname arg1
+ff() {
+    rgvalid=$(command -v rg)
+    [[ -z "$1" ]] && echo "Usage :: findfile <filename>" || [[ -z "$rgvalid" ]] && rg -g $1 --files || find ./ -iname $1
+	# arg1=$1 find ./ -iname arg1
 }
 
-# source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+prevhist() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: $0 <term to search>" 
+    else
+        rg $1 ~/bkup/.zshhist.bkup ;
+    fi
+}
 
+hist() {
+    if [[ -z "$1" ]]; then 
+        echo "Usage: hist <value> value not provided"
+    else
+        howmany=50
+        if [[ -n "$2" ]]; then
+            howmany=$2
+        fi
+        history | grep $1 | tail -n $howmany
 
-# Docker Initialization
-# eval $(docker-machine env default)
+    fi
+}
 
+set -o vi
+# Link to rust binaries
 
+export PATH=$PATH:/Users/udokanwosu/.cargo/bin
 
-# # Docker Commands
-# alias dkrm="docker rm -v $(docker ps -aq -f status=exited)"
-# alias dkstop="docker stop $(docker ps -q)"
-# alias dkrmall="docker rm $(docker ps -aq)"
+# Docker Commands
+alias dkrm="docker rm -v $(docker ps -aq -f status=exited)"
+alias dkstop="docker stop $(docker ps -q)"
+alias dkrmall="docker rm $(docker ps -aq)"
+
+# tmux configuraton
+alias tma="tmux new-session -A -s work"
 
 
 # Go paths
-export GOPATH=$HOME/Go
+# export GOPATH=$HOME/Documents/yoti/yoti-backend/go
 # export PATH=$PATH:/usr/local/Cellar/go/1.9/bin
+export GOPATH=$HOME/go
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
@@ -183,7 +135,7 @@ export PATH=$PATH:$GOROOT/bin
 # Visual Studio Code
 export PATH=$PATH:~/scripts/
 
-source "/Users/udoka.nwosu/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+# source "/Users/udokanwosu/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
 #Nmap setting
 alias nmp="/usr/local/Cellar/nmap/7.60/bin/nmap"
@@ -194,31 +146,11 @@ export RUST_SRC_PATH=/usr/local/src/rust/src
 
 # Music 
 alias music="sudo docker run --device /dev/snd -it --rm --name mpsyt rothgar/mpsyt"
-
-set -o vi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias gop="cd /Users/udoka.nwosu/Documents/yoti/yoti-backend/go/src/github.com/lampkicking"
+alias sand="cd /Users/udoka.nwosu/Documents/yoti/sandbox/"
 
 
-# Go path
-export GOPATH=$HOME/go # don't forget to change your path correctly!
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
-
+export PATH=$PATH:/Users/udoka.nwosu/Documents/yoti/yoti-backend/go/src/github.com/lampkicking/core-ci
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# --files: List files that would be searched but do not search
-# --no-ignore: Do not respect .gitignore, etc...
-# --hidden: Search hidden files and folders
-# --follow: Follow symlinks
-# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
-
-# zsh completions 
-if [ $commands[kubectl] ]; then
-  source <(kubectl completion zsh)
-fi
+export TERM="xterm-256color"
