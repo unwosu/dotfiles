@@ -1,0 +1,301 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+call plug#begin('~/.config/nvim/bundle')
+
+"NVIM auto complete"
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+
+
+let g:coc_global_extensions = [ 'coc-emoji', 'coc-eslint', 'coc-prettier',
+            \ 'coc-tsserver', 'coc-tslint', 'coc-tslint-plugin',
+            \ 'coc-css', 'coc-json', 'coc-pyls', 'coc-yaml' ]
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'posva/vim-vue'
+Plug 'ayu-theme/ayu-vim' " or other package manager
+Plug 'albertorestifo/github.vim'
+
+
+" Productivity
+Plug 'ervandew/supertab'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
+Plug 'benmills/vimux'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-commentary'
+Plug 'flazz/vim-colorschemes'
+
+" Language plugins
+" Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-go', {'build': {'unix': 'make'}}
+Plug 'mattn/emmet-vim'
+
+" Director Navigation
+Plug 'scrooloose/nerdtree'
+
+" Themes
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Plug 'Yggdroot/indentLine'
+Plug 'jiangmiao/auto-pairs'
+
+" Typescript
+Plug 'leafgarland/typescript-vim'
+
+" Go plugins
+Plug 'fatih/vim-go'
+
+" Rust plugins
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+
+" Fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+call plug#end()            " required
+
+filetype plugin indent on    " required
+
+
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+" autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+let g:go_fmt_command = "goimports"
+
+" Using deplete
+let g:deoplete#enable_at_startup = 1
+
+let mapleader = " "
+
+
+
+set nofoldenable
+set backspace=2   " Backspace deletes like most programs in insert mode
+set nobackup
+set nowritebackup
+set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set history=50
+set ruler         " show the cursor position all the time
+set showcmd       " display incomplete commands
+set incsearch     " do incremental searching
+set laststatus=2  " Always display the status line
+set autowrite     " Automatically :write before running commands
+set ignorecase
+set smartcase
+set hlsearch
+set relativenumber
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set number
+syntax on
+
+set smartindent
+set autoindent
+"...
+" colorscheme ayu
+" " colorscheme palenight
+" set termguicolors     " enable true colors support
+" let ayucolor="light"  " for light version of theme
+set background=dark       " for the light version
+"
+" Oceanic
+" let g:material_style='oceanic'
+" set background=dark
+" colorscheme vim-material
+" colorscheme palenight
+" colorscheme iosvkem
+"
+colorscheme palenight
+
+" if you use airline / lightline
+let g:airline_theme = "github"
+let g:lightline = { 'colorscheme': 'github' }
+
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+
+set termguicolors     " enable true colors support
+set mouse=a
+" set cursorline
+" set lazyredraw
+" set synmaxcol=128
+" syntax sync minlines=256
+
+let g:airline_theme = 'onedark'
+let g:airline#extensions#tabline#enabled = 1
+
+" let g:material_theme_style = 'dark'
+let g:one_allow_italics = 1 " I love italic for comments
+
+" All custom keys for vim
+nnoremap <F6> :w<CR>
+nnoremap <leader>def <F12>
+nnoremap <C-b> <C-S>B<enter>
+nnoremap <leader>fs :w<enter>
+nnoremap <leader>fsq :wq<enter>
+nnoremap <leader>w :w<enter>
+nnoremap <leader>qq :q!<enter>
+nnoremap <leader>bb :CtrlP<enter>
+nnoremap <leader>ss :Rg<enter>
+nnoremap <leader>ft :NERDTreeToggle<CR>
+nnoremap <leader>ff :FZF<CR>
+nnoremap <leader>pf :FZF<CR>
+nnoremap <leader>ww <C-W><C-W>
+nnoremap <leader>fmt gg=G<enter>
+noremap <leader>/ :Commentary<cr>
+noremap <leader>cl :Commentary<cr>
+noremap <leader>rl :VimuxRunLastCommand<cr>
+
+
+" Managing some splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Indent guides
+" let g:indentLine_color_term = 249
+" let g:indentLine_char = '│'
+" let g:indentLine_conceallevel=1
+
+set splitbelow
+set splitright
+
+" Auto pairs Options
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+
+" Change the way the cursor is in insert mode
+" autocmd InsertEnter,InsertLeave * set cul!
+
+
+" Closing brackets
+let g:AutoPairs = {}
+let g:autoclose_on = 0
+
+set visualbell t_vb=
+
+
+"Rust formatting
+let g:rustfmt_autosave = 1
+
+" Type script formatting
+let g:typescript_indent_disable = 0
+
+"Multiline comment.
+" let g:multi_cursor_use_default_mapping=0
+
+" Emmet html settings
+let g:user_emmet_install_global = 0
+autocmd Filetype html,css EmmetInstall
+
+" Setting the python paths and stuff
+let g:pymode_python = 'python3'
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
+" Jedi vim options
+let g:jedi#show_call_signatures = "1"
+
+" FZF with ripgrep FTW!!!
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+set grepprg=rg\ --vimgrep
+
+command! -bang -nargs=* Rg
+            \ call fzf#vim#grep(
+            \   'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+            \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+            \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+            \   <bang>0)
+
+
+function! s:build_go_files()
+    let l:file = expand('%')
+    if l:file =~# '^\f\+_test\.go$'
+        call go#test#Test(0, 1)
+    elseif l:file =~# '^\f\+\.go$'
+        call go#cmd#Build(0)
+    endif
+endfunction
+
+" Indent settings
+autocmd FileType python setl ts=4 sw=4 sts=0 et
+autocmd FileType javascript setl ts=4 sw=4 sts=0 et
+autocmd FileType vue setl ts=2 sw=2 sts=0 et
+autocmd FileType go setl ts=2 sw=2 sts=0 noet
+
+" Auto Commands
+augroup go
+    autocmd!
+    autocmd FileType go nmap <silent> :build :!go build main.go<cr>
+    autocmd FileType go nmap <silent> :ben :!go test -bench=. ./...<cr>
+    autocmd FileType go nmap <silent> :run :!go run main.go<cr>
+    autocmd FileType go nmap <silent> :rr :!go run %<cr>
+    autocmd FileType go nmap <silent> :gta :!go test ./...<cr>
+    " autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+    autocmd Filetype go nmap <silent> :gchk :!go build -gcflags '-m -m' ./main.go
+augroup END
+
+augroup javascript
+    " autocmd!
+    autocmd FileType javascript nmap <silent> :rund :!npm run dev<cr>
+    autocmd FileType javascript nmap <silent> :runf :!node %<cr>
+    autocmd FileType javascript nmap <silent> :test :!npm run test<cr>
+augroup END
+
+" Copy command without pbcopy
+set clipboard^=unnamed
+set t_Co=256
+
+" This essentially highlights values that goes beyond the current 80 mark
+augroup collumnLimit
+    autocmd!
+    autocmd BufEnter,WinEnter,FileType *.py,*.java,*.go
+                \ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+    autocmd BufEnter,WinEnter,FileType *.py,*.java,*.go
+                \ match OverLength /\%81v.\+/
+augroup END
+
+
+" Scrolling functionality
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" Remove unwanted spaces "
+autocmd BufWritePre * %s/\s\+$//e
+
+set ffs=unix
+set encoding=utf-8
+set fileencoding=utf-8
+set fileformats=unix
+set listchars=eol:¬,trail:·,tab:»·
+set list
+
+
+" Nerd TREE commands
+" autocmd bufenter * if (winnr(“$”) == 1 && exists(“b:NERDTreeType”) && b:NERDTreeType == “primary”) | q | endif
+let NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
